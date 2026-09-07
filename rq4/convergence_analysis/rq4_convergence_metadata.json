@@ -1,0 +1,29 @@
+{
+  "sample_sizes": [
+    3,
+    5,
+    7,
+    10,
+    15,
+    20,
+    25,
+    30
+  ],
+  "transitions": [
+    "3->5",
+    "5->7",
+    "7->10",
+    "10->15",
+    "15->20",
+    "20->25",
+    "25->30"
+  ],
+  "relative_change_definition": "|previous-current|/|current|",
+  "signed_change_definition": "(current-previous)/|current|",
+  "decomposition_variables": [
+    "median_mmd2",
+    "theta",
+    "median_rho"
+  ],
+  "source_directory": "sample_size_analysis"
+}

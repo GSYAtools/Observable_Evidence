@@ -1,0 +1,27 @@
+{
+  "experiment": "RQ1",
+  "seed": 20260829,
+  "domain": "[0,1]^2",
+  "min_degree": 1,
+  "max_degree": 12,
+  "training_grid_size_per_axis": 31,
+  "evaluation_grid_size_per_axis": 201,
+  "training_points": 961,
+  "evaluation_points": 40401,
+  "basis": "total-degree tensor-product Legendre",
+  "fit_methods": [
+    "L2 least squares",
+    "grid-based L-infinity linear programming"
+  ],
+  "targets": [
+    "phi1_periodic",
+    "phi2_localised",
+    "phi3_rational",
+    "phi4_interaction",
+    "phi5_transition"
+  ],
+  "python_version": "3.13.11",
+  "numpy_version": "2.5.2",
+  "scipy_version": "1.18.1",
+  "pandas_version": "3.0.5"
+}

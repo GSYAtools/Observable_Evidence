@@ -1,0 +1,21 @@
+# Python bytecode
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+rq4/sample_size_analysis/rq4_sample_size_raw.csv
+rq3/results/rq3_perturbation_raw.csv

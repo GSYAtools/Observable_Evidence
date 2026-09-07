@@ -1,0 +1,30 @@
+{
+  "rq": "RQ4",
+  "representation": "R_E",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "embedding_dimension": 384,
+  "final_sample_size": 30,
+  "alpha": 0.05,
+  "B_calibration": 5000,
+  "B_evaluation": 2000,
+  "B_nominal_validation": 2000,
+  "discrepancy": "biased MMD^2",
+  "kernel": "RBF",
+  "bandwidth": "median pairwise Euclidean distance over nominal embeddings, estimated separately by provider and scenario",
+  "providers": [
+    "openai",
+    "gemini",
+    "qwen"
+  ],
+  "perturbation_families": [
+    "semantic",
+    "context_removal",
+    "surface"
+  ],
+  "lambda_values": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ]
+}

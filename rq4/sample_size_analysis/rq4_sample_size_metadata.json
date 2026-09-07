@@ -1,0 +1,35 @@
+{
+  "providers": [
+    "openai",
+    "gemini",
+    "qwen"
+  ],
+  "sample_sizes": [
+    3,
+    5,
+    7,
+    10,
+    15,
+    20,
+    25,
+    30
+  ],
+  "reference_n": 30,
+  "previous_n": 25,
+  "available_perturbed_min": 30,
+  "minimum_nominal_available": 60,
+  "alpha": 0.05,
+  "B_calibration": 2000,
+  "B_perturbation": 1000,
+  "discrepancy": "biased MMD^2",
+  "kernel": "RBF",
+  "bandwidth": "median pairwise Euclidean distance over nominal embeddings, separately by provider and scenario",
+  "calibration": "two disjoint nominal samples of size n; procedure is not changed across checkpoints",
+  "representation": "R_E",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "stability_criteria": {
+    "max_median_relative_deviation": 0.1,
+    "min_exceedance_agreement": 0.9,
+    "min_rank_stability": 0.9
+  }
+}

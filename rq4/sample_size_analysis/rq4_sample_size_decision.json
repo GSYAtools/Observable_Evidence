@@ -1,0 +1,10 @@
+{
+  "reference_n": 30,
+  "previous_n": 25,
+  "previous_median_relative_deviation": 0.15659386197550051,
+  "previous_minimum_mean_exceedance_agreement": 0.9645125,
+  "previous_global_median_rank_stability": 1.0,
+  "decision": "INCREASE_TO_REFERENCE",
+  "recommended_n": 30,
+  "message": "n=25 is not stable against n=30; use n=30 and, if needed, acquire the next checkpoint."
+}

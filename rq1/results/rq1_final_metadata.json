@@ -1,0 +1,35 @@
+{
+  "experiment": "RQ1 final controlled expressive approximation",
+  "date_design_frozen": "2026-08-29",
+  "seed": 20260829,
+  "domain": "[0,1]^2",
+  "base_functionals": {
+    "T1": "u",
+    "T2": "v"
+  },
+  "separation": "T1 and T2 separate points on K",
+  "min_degree": 1,
+  "max_degree": 16,
+  "primary_configuration": {
+    "training_grid_per_axis": 31,
+    "evaluation_grid_per_axis": 201
+  },
+  "robustness_configuration": {
+    "training_grid_per_axis": 41,
+    "evaluation_grid_per_axis": 251
+  },
+  "basis": "total-degree tensor-product Legendre basis",
+  "primary_fit": "grid-based L-infinity linear programming",
+  "control_fit": "L2 least squares",
+  "targets": {
+    "periodic": "sin(pi*u)*cos(pi*v)",
+    "interaction": "sin(3*pi*u*v)",
+    "transition": "tanh(8*(u+v-1))"
+  },
+  "primary_outcome": "empirical maximum approximation error on independent evaluation grid",
+  "interpretation": "numerical illustration of expressive approximation; not empirical proof of Theorem 1",
+  "python_version": "3.13.11",
+  "numpy_version": "2.5.2",
+  "scipy_version": "1.18.1",
+  "pandas_version": "3.0.5"
+}

@@ -1,0 +1,573 @@
+{
+  "dataset": "RQ4 controlled prompt perturbation pilot",
+  "version": "1.0",
+  "language": "en",
+  "perturbation_levels": [
+    0.25,
+    0.50,
+    0.75,
+    1.00
+  ],
+  "design_principles": {
+    "semantic": "Progressively modifies task-relevant propositional content while preserving the task type and coherence.",
+    "context_removal": "Progressively removes task-relevant information without introducing contradictory replacement facts.",
+    "surface": "Progressively modifies lexical and syntactic form while preserving task-relevant propositional content."
+  },
+  "scenarios": [
+    {
+      "scenario_id": "CR01",
+      "task_family": "contextual_reasoning",
+      "base": "A company operates two data centres. Data centre A processes twice the workload of data centre B. Data centre B consumes 40% more energy per transaction than A. Both centres have similar cooling costs and use electricity from the same energy mix. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+      "transformations": {
+        "semantic": [
+          {
+            "lambda": 0.25,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B. Data centre B consumes 20% more energy per transaction than A. Both centres have similar cooling costs and use electricity from the same energy mix. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "B energy consumption per transaction: 40% higher -> 20% higher"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B. Both centres consume approximately the same amount of energy per transaction. Data centre B has moderately higher cooling costs, and both use electricity from the same energy mix. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "energy consumption per transaction becomes approximately equal",
+              "B cooling costs become moderately higher"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B and consumes 20% more energy per transaction. Data centre A also has moderately higher cooling costs. Both centres use electricity from the same energy mix. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "energy inefficiency shifts from B to A",
+              "A cooling costs become moderately higher"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B and consumes 40% more energy per transaction. Data centre A also has substantially higher cooling costs. Both centres use electricity from the same energy mix. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "A becomes the clearly less energy-efficient centre",
+              "A cooling costs become substantially higher"
+            ],
+            "removed_facts": []
+          }
+        ],
+        "context_removal": [
+          {
+            "lambda": 0.25,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B. Data centre B consumes 40% more energy per transaction than A. Both centres have similar cooling costs. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "electricity mix"
+            ]
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A company operates two data centres. Data centre A processes twice the workload of data centre B. Data centre B consumes more energy per transaction than A. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "magnitude of energy difference",
+              "cooling-cost comparison",
+              "electricity mix"
+            ]
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A company operates two data centres with different workloads and different levels of energy consumption per transaction. The company wants to prioritise one centre for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "which centre has higher workload",
+              "which centre consumes more energy per transaction",
+              "magnitude of both differences",
+              "cooling-cost comparison",
+              "electricity mix"
+            ]
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A company operates two data centres and wants to prioritise one of them for an energy-efficiency review. Which centre should be prioritised, and why?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "which centre has higher workload",
+              "magnitude of the workload difference",
+              "which centre consumes more energy per transaction",
+              "magnitude of the energy-consumption difference",
+              "cooling-cost comparison",
+              "electricity mix"
+            ]
+          }
+        ],
+        "surface": [
+          {
+            "lambda": 0.25,
+            "prompt": "A company runs two data centres. Centre A handles twice the workload of centre B, while B uses 40% more energy per transaction than A. Their cooling costs are similar, and both rely on the same electricity mix. The company wants to choose one centre for an energy-efficiency review. Which should it prioritise, and why?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "Two data centres are operated by the same company. Although A handles twice as much workload as B, each transaction processed by B requires 40% more energy than one processed by A. Cooling costs are comparable at the two sites, which also share the same electricity mix. Which data centre should receive priority for an energy-efficiency review, and what supports that choice?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "Consider two data centres belonging to one company. The first, A, carries a workload twice that of B. The second, B, nevertheless requires 1.4 times as much energy for each transaction. Neither cooling expenditure nor electricity mix meaningfully differentiates the sites. Determine which centre should be examined first for energy efficiency and explain the reasoning.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "An organisation must decide where to begin an energy-efficiency review across two computing facilities. One facility, A, handles two units of workload for every unit handled by B. On a per-transaction basis, however, B's energy requirement is 40% greater. Cooling expenditure is comparable, and the source mix of their electricity is identical. Identify the facility that should receive priority and justify the decision.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "CP01",
+      "task_family": "comparison",
+      "base": "A research team must choose between two storage systems for an analytical workload. System A provides 20% lower query latency and costs 15% more per month. System B has higher latency but supports automatic cross-region replication at no additional cost. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+      "transformations": {
+        "semantic": [
+          {
+            "lambda": 0.25,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides 20% lower query latency and costs 10% more per month. System B has higher latency but supports automatic cross-region replication at no additional cost. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "A price premium: 15% -> 10%"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides 20% lower query latency, costs the same per month as B, and supports cross-region replication as an optional paid feature. System B has higher latency but includes automatic cross-region replication at no additional cost. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "monthly cost becomes equal",
+              "A gains optional paid cross-region replication"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides 20% lower query latency, costs 10% less per month, and includes automatic cross-region replication. System B has higher latency and requires an additional fee for cross-region replication. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "A becomes less expensive",
+              "A gains included replication",
+              "B replication becomes paid"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides 30% lower query latency, costs 15% less per month, and includes automatic cross-region replication. System B has higher latency, higher monthly cost, and requires an additional fee for cross-region replication. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "A latency advantage increases",
+              "A becomes less expensive",
+              "A includes replication",
+              "B becomes dominated on the stated attributes"
+            ],
+            "removed_facts": []
+          }
+        ],
+        "context_removal": [
+          {
+            "lambda": 0.25,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides lower query latency but costs more per month. System B has higher latency but supports automatic cross-region replication at no additional cost. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "exact latency advantage",
+              "exact price premium"
+            ]
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A research team must choose between two storage systems for an analytical workload. System A provides lower query latency. System B supports automatic cross-region replication. The workload contains critical data that must remain available after a regional outage. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "cost comparison",
+              "exact latency difference",
+              "replication cost"
+            ]
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A research team must choose between two storage systems that differ in performance and resilience characteristics. The workload contains critical data. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "which system has lower latency",
+              "which system provides replication",
+              "cost information",
+              "regional-outage requirement"
+            ]
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A research team must choose between two storage systems for a critical analytical workload. Which system is the better choice, and what trade-off determines the decision?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "performance comparison",
+              "cost comparison",
+              "replication characteristics",
+              "specific availability requirement"
+            ]
+          }
+        ],
+        "surface": [
+          {
+            "lambda": 0.25,
+            "prompt": "A research team needs to select one of two storage systems for an analytical workload. System A offers 20% lower query latency but has a monthly cost 15% above that of B. System B is slower, although automatic cross-region replication is included at no extra charge. The workload contains critical data that must stay available after a regional outage. Which system should the team choose, and which trade-off drives that choice?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "Two storage alternatives are being evaluated for an analytical workload. Queries on A have 20% less latency, although A costs 15% more each month. B responds more slowly but provides automatic replication across regions without an additional fee. Because the stored data are critical, service must remain available if an entire region fails. Determine the preferable system and explain the trade-off on which the decision rests.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "An analytical platform can use either storage option A or B. Choosing A reduces query latency by 20% relative to B but raises monthly expenditure by 15%. Choosing B sacrifices that latency advantage while including cross-region replication in the standard price. Regional failure must not make the critical dataset unavailable. Which option is preferable, and how should the competing considerations be weighed?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A team is deciding where to place a critical analytical dataset. One candidate, A, answers queries with latency 20% below B's but carries a 15% monthly price premium. The other candidate, B, is slower yet automatically maintains copies in another region without extra cost. Continued access following the loss of a region is mandatory. Identify the stronger choice and explain which performance, cost, and resilience trade-off determines it.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "EX01",
+      "task_family": "explanation",
+      "base": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation remains below 60%, while requests waiting for access to a shared external database increase during the same periods. Explain the most plausible reason why tail latency increases even though average CPU utilisation remains moderate.",
+      "transformations": {
+        "semantic": [
+          {
+            "lambda": 0.25,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation remains below 60%, while requests waiting for access to a shared external database increase slightly during the same periods. Explain the most plausible reason why tail latency increases even though average CPU utilisation remains moderate.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "database waiting increase: strong -> slight"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation reaches around 75% during these periods, while requests waiting for access to a shared external database also increase moderately. Explain the most plausible reason for the increase in tail latency.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "CPU utilisation rises to approximately 75%",
+              "database waiting increases moderately"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation exceeds 90% during these periods, while requests waiting for access to the shared external database increase only slightly. Explain the most plausible reason for the increase in tail latency.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "CPU utilisation becomes very high",
+              "database waiting becomes only slightly elevated"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation exceeds 95% during those periods, while requests waiting for access to the shared external database remain unchanged. Explain the most plausible reason why tail latency increases.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "CPU utilisation becomes saturated",
+              "database waiting no longer changes"
+            ],
+            "removed_facts": []
+          }
+        ],
+        "context_removal": [
+          {
+            "lambda": 0.25,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. CPU utilisation remains moderate, while requests waiting for access to a shared external database increase during the same periods. Explain the most plausible reason for the increase in tail latency.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "exact CPU utilisation"
+            ]
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. Requests waiting for access to a shared external database increase during the same periods. Explain the most plausible reason for the increase in tail latency.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "CPU utilisation behaviour"
+            ]
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A machine-learning service shows stable average latency during the day, but its 99th-percentile latency rises sharply during short periods of high request volume. Explain the most plausible reason for the increase in tail latency.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "CPU utilisation behaviour",
+              "database waiting behaviour"
+            ]
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A machine-learning service experiences sharp increases in tail latency during some periods. Explain plausible reasons why this could occur.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "request-volume condition",
+              "average-latency behaviour",
+              "CPU utilisation behaviour",
+              "database waiting behaviour"
+            ]
+          }
+        ],
+        "surface": [
+          {
+            "lambda": 0.25,
+            "prompt": "A machine-learning service has stable average latency through the day, yet its 99th-percentile latency increases sharply during brief intervals of heavy request traffic. CPU use stays below 60%, while the number of requests waiting for a shared external database rises at the same time. What is the most plausible explanation for the increase in tail latency despite moderate average CPU use?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "Average response latency for a machine-learning service remains stable, but short bursts of high request volume coincide with a marked increase in the 99th percentile. Processor utilisation does not exceed 60%. During those same bursts, however, more requests queue for access to a shared external database. Explain the most likely source of the tail-latency increase.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "Consider a machine-learning service whose mean latency changes little over the course of a day. During brief demand peaks, the upper tail behaves differently: p99 latency rises sharply. The CPUs remain under 60% utilised, whereas contention for a shared external database grows and more requests wait for access. What mechanism most plausibly accounts for the tail behaviour?",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "Brief traffic surges affect a machine-learning service in an asymmetric way. Its typical response time remains broadly stable, but the slowest one percent of requests become substantially slower. Compute utilisation stays below 60%, so the processors are not saturated. At precisely those times, the queue of requests competing for a common external database grows. Explain which bottleneck most plausibly produces the observed increase in p99 latency.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          }
+        ]
+      }
+    },
+    {
+      "scenario_id": "SU01",
+      "task_family": "summarisation_interpretation",
+      "base": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time fell by 18%, while the number of tasks completed per employee increased by 12%. Employee overtime remained unchanged. Two teams reported that the tool occasionally assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased slightly during the pilot. Summarise the main outcome of the pilot, including both the observed benefit and the principal concern.",
+      "transformations": {
+        "semantic": [
+          {
+            "lambda": 0.25,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time fell by 10%, while the number of tasks completed per employee increased by 8%. Employee overtime remained unchanged. Two teams reported that the tool occasionally assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased slightly during the pilot. Summarise the main outcome of the pilot, including both the observed benefit and the principal concern.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "completion-time improvement decreases",
+              "productivity improvement decreases"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time remained approximately unchanged, and the number of tasks completed per employee showed no clear increase. Employee overtime remained unchanged. Two teams reported that the tool sometimes assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased during the pilot. Summarise the main outcome of the pilot, including both the observed operational effect and the principal concern.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "operational improvement disappears",
+              "complaint increase becomes clearer"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time increased by 8%, while the number of tasks completed per employee fell by 5%. Employee overtime increased slightly. Three teams reported that the tool sometimes assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased noticeably during the pilot. Summarise the main outcome of the pilot, including both the observed operational effect and the principal concern.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "completion time becomes worse",
+              "productivity declines",
+              "overtime increases",
+              "urgent-task concern becomes more widespread"
+            ],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time increased by 18%, while the number of tasks completed per employee fell by 12%. Employee overtime increased. Three teams reported that the tool frequently assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased substantially during the pilot. Summarise the main outcome of the pilot, including both the observed operational effect and the principal concern.",
+            "semantic_change_expected": true,
+            "propositional_content_preserved": false,
+            "changed_facts": [
+              "completion-time benefit reverses",
+              "productivity benefit reverses",
+              "overtime worsens",
+              "urgent-task problem becomes frequent",
+              "complaints increase substantially"
+            ],
+            "removed_facts": []
+          }
+        ],
+        "context_removal": [
+          {
+            "lambda": 0.25,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Average task completion time fell, while the number of tasks completed per employee increased. Employee overtime remained unchanged. Two teams reported that the tool occasionally assigned urgent tasks too late, and customer complaints related to delayed urgent requests increased slightly during the pilot. Summarise the main outcome of the pilot, including both the observed benefit and the principal concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "exact completion-time improvement",
+              "exact productivity improvement"
+            ]
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Task completion became faster and employee productivity increased. Some teams reported that urgent tasks were occasionally assigned too late, and complaints related to delayed urgent requests increased. Summarise the main outcome of the pilot, including both the observed benefit and the principal concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "exact performance changes",
+              "overtime information",
+              "number of teams reporting the issue",
+              "magnitude of complaint increase"
+            ]
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. The pilot produced some operational benefits, but teams also reported problems involving urgent tasks. Summarise the main outcome of the pilot, including both the observed benefit and the principal concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "nature and magnitude of operational benefits",
+              "overtime information",
+              "frequency of urgent-task issue",
+              "customer complaint information"
+            ]
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "A six-month pilot introduced an automated scheduling tool in four service teams. Summarise the main outcome of the pilot, including any potential benefit and concern that should be considered.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": false,
+            "changed_facts": [],
+            "removed_facts": [
+              "all measured operational outcomes",
+              "overtime information",
+              "urgent-task observations",
+              "customer complaint information"
+            ]
+          }
+        ],
+        "surface": [
+          {
+            "lambda": 0.25,
+            "prompt": "Four service teams tested an automated scheduling tool for six months. Average task completion time decreased by 18%, and tasks completed per employee rose by 12%. Overtime did not change. Two teams said that urgent tasks were occasionally scheduled too late, while complaints about delayed urgent requests increased slightly. Summarise the pilot's main result, covering both its benefit and its principal concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.50,
+            "prompt": "An automated scheduling system was piloted for six months across four service teams. The trial reduced average completion time by 18% and increased output per employee by 12%, without changing overtime. However, two teams experienced occasional late assignment of urgent work, and customer complaints concerning delayed urgent requests rose slightly. Summarise the principal benefit observed in the trial and the main concern that accompanied it.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 0.75,
+            "prompt": "During a six-month trial involving four service teams, automated scheduling was associated with an 18% reduction in average task-completion time and a 12% increase in tasks completed per employee. These gains occurred without a change in employee overtime. The trial also revealed a drawback: two teams sometimes received urgent assignments too late, alongside a small rise in customer complaints about delayed urgent requests. Provide a concise interpretation that captures both the operational gain and the key concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          },
+          {
+            "lambda": 1.00,
+            "prompt": "Over four service teams, six months of automated scheduling produced two contrasting observations. On the positive side, work was completed 18% faster on average and each employee completed 12% more tasks, with no increase in overtime. On the negative side, two teams reported occasional delays in assigning urgent work, and complaints from customers affected by delayed urgent requests rose slightly. Condense these findings into a balanced statement of the pilot's main benefit and principal concern.",
+            "semantic_change_expected": false,
+            "propositional_content_preserved": true,
+            "changed_facts": [],
+            "removed_facts": []
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+sample_size,reference_n,global_median_relative_deviation,minimum_mean_exceedance_agreement,global_median_rank_stability,meets_stability_criteria,is_previous_checkpoint,is_reference_checkpoint
+3,30,0.8521073466981661,0.7477,1.0,False,False,False
+5,30,0.7905332840743589,0.8591749999999999,1.0,False,False,False
+7,30,0.7260390403605497,0.906125,1.0,False,False,False
+10,30,0.6297506085096867,0.930525,1.0,False,False,False
+15,30,0.4786490189263256,0.9505125,1.0,False,False,False
+20,30,0.31471701266338353,0.9587625,1.0,False,False,False
+25,30,0.15659386197550051,0.9645125,1.0,False,True,False
+30,30,0.0,1.0,1.0,True,False,True

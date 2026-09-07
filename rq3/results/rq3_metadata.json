@@ -1,0 +1,72 @@
+{
+  "experiment": "RQ3 calibration under controlled perturbation",
+  "base_seed": 20260829,
+  "seeds": [
+    20260829,
+    20260830,
+    20260831,
+    20260832,
+    20260833,
+    20260834,
+    20260835,
+    20260836,
+    20260837,
+    20260838
+  ],
+  "n_macro_seeds": 10,
+  "nominal_distribution": "Normal(0,1)",
+  "perturbations": {
+    "location": "Normal(lambda,1)",
+    "scale": "Normal(0,(1+lambda)^2)",
+    "contamination": "(1-lambda)Normal(0,1) + lambda Normal(3,0.5^2)"
+  },
+  "lambda_values": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.8,
+    1.0
+  ],
+  "measures": [
+    "JS",
+    "TV",
+    "W1",
+    "MMD2"
+  ],
+  "primary_sample_size": 100,
+  "sample_sizes": [
+    50,
+    100,
+    250
+  ],
+  "alpha": 0.05,
+  "calibration_quantile": 0.95,
+  "calibration_pool_size": 20000,
+  "histogram_bins": 40,
+  "histogram_range_quantiles": [
+    0.001,
+    0.999
+  ],
+  "mmd": "biased MMD^2 with RBF kernel",
+  "mmd_bandwidth": "median heuristic estimated once per macro-seed from nominal calibration data",
+  "primary_iterations": {
+    "B_calibration": 2000,
+    "R_nominal": 1000,
+    "R_perturbation": 1000
+  },
+  "robustness_iterations": {
+    "B_calibration": 1000,
+    "R_nominal": 500,
+    "R_perturbation": 500
+  },
+  "interpretation": "rho > 1 indicates exceedance of the calibrated nominal reference bound; no diagnostic meaning is assigned",
+  "python_version": "3.13.11",
+  "numpy_version": "2.5.2",
+  "scipy_version": "1.18.1",
+  "pandas_version": "3.0.5"
+}

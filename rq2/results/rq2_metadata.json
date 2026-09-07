@@ -1,0 +1,38 @@
+{
+  "experiment": "RQ2 controlled representational indistinguishability",
+  "seed": 20260829,
+  "situation_space": "[-1,1]^2",
+  "target": "phi(x,z)=z",
+  "regimes": {
+    "preserved": "omega(x,z)=(x,z), psi(x,z)=(x,z)",
+    "observational_loss": "omega(x,z)=x",
+    "representational_loss": "omega(x,z)=(x,z), psi(x,z)=x"
+  },
+  "population": {
+    "n_train": 5000,
+    "n_test": 10000,
+    "distribution": "x,z independent Uniform(-1,1)",
+    "degrees": [
+      1,
+      16
+    ],
+    "theoretical_uninformative_rmse": 0.5773502691896258
+  },
+  "pairwise": {
+    "d_values": [
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "n_x_per_d": 500,
+    "theoretical_bound": "|phi(sa)-phi(sb)|/2 = d"
+  },
+  "basis": "Legendre polynomial basis",
+  "interpretation": "controlled empirical illustration of Proposition 1; not empirical proof",
+  "python_version": "3.13.11",
+  "numpy_version": "2.5.2",
+  "scipy_version": "1.18.1",
+  "pandas_version": "3.0.5"
+}
